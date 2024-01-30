@@ -14,12 +14,19 @@ class MySystem(muscadet.System):
         self.add_component(cls="Block",
                            name="C2")
 
-        self.auto_connect("S", "C.")
+        self.add_component(cls="Block",
+                           name="C3")
 
-        self.add_logic_or("LO__C", {"C.": ".*"},
+        self.add_component(cls="Block",
+                           name="C4")
+
+        self.auto_connect("S", "C[12]")
+        self.auto_connect("C[12]", "C3")
+
+        self.add_logic_or("LO__C", {"C[12]": ".*"},
                           )
 
-        self.add_logic_or("LI__C", {"C.": ".*"},
+        self.add_logic_or("LI__C", {"C[12]": ".*"},
                           on_available=True,
                           )
 

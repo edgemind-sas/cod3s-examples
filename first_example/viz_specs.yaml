@@ -27,7 +27,7 @@ components:
     conditions:
       - expr: "not {COMP}.variable('flow_fed_available_out').value()"
         style:
-          color: "#00FF00"
+          color: "#FF00FF"
 
     
   block:
