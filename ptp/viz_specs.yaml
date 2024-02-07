@@ -24,15 +24,29 @@ components:
       - name: flow_out
         spot: right
 
-  # source:
-  #   type: Source
-  #   ports:
-  #     - name: flow_out
-  #       spot: right
-  #   conditions:
-  #     - expr: "not {COMP}.variable('flow_fed_available_out').value()"
-  #       style:
-  #         color: "#FF00FF"
+  start:
+    type: Start
+    style:
+      fontname: "monospace"
+      fontsize: "10"
+      shape: "box"
+      style: "filled"
+      fontcolor: "#202020"
+      color: "#4CAF50"
+
+  tasks:
+    type: Task
+    conditions:
+      - expr: "{COMP}.automaton('flow_out_tempo').states()[0].isActive()"
+        style:
+          color: "#4CAF50"
+
+  end:
+    type: End
+    conditions:
+      - expr: "{COMP}.variable('flow_fed_in').value()"
+        style:
+          color: "#4CAF50"
 
     
   # block:
@@ -66,6 +80,14 @@ connections:
       stroke_color: "#1f416d"
       to_arrow: Standard
 
+  tasks_done:
+    conditions:
+      - expr: "{CS}.variable('flow_fed_out').value()"
+        style:
+          stroke_color: "#4CAF50"
+          stroke_width: 2
+    
+      
   flow_available:
     port_target: ".*available.*"
     style:

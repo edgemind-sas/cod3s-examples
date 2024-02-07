@@ -8,6 +8,7 @@ class Start(muscadet.ObjFlow):
 
         self.add_flow_out(
             name="flow",
+            var_prod_default=True,
         )
 
 class Task(muscadet.ObjFlow):
@@ -18,6 +19,7 @@ class Task(muscadet.ObjFlow):
 
         self.add_flow_in(
             name="flow",
+            logic="and",
         )
 
         self.add_flow_out_tempo(
@@ -25,8 +27,10 @@ class Task(muscadet.ObjFlow):
             var_prod_cond=[
                 "flow",
             ],
-            flow_init_state="stop",
-            occ_start_flow=dict(cls="uniform", min=duration_min, max=duration_max),
+            state_enable_name="Done",
+            state_disable_name="Waiting",
+            occ_enable_flow=dict(cls="exp",
+                                 rate=2/(duration_min + duration_max)),
         )
 
 
@@ -38,4 +42,5 @@ class End(muscadet.ObjFlow):
 
         self.add_flow_in(
             name="flow",
+            logic="and",
         )
