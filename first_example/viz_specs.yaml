@@ -41,9 +41,9 @@ components:
   logic:
     type: Logic
     ports:
-      - name: "flow_.*_in"
+      - name: "flow_.*in"
         spot: bottom
-      - name: "flow_.*_out"
+      - name: "flow_.*out"
         spot: top
 
 connections:

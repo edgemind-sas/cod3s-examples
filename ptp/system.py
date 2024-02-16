@@ -8,7 +8,7 @@ if 'ipdb' in installed_pkg:
 
 
 class PTPSystem(muscadet.System):
-    def __init__(self, name, specs, logger=None):
+    def __init__(self, name, specs=None, logger=None):
         super().__init__(name)
 
         self.logger = logger
@@ -20,10 +20,11 @@ class PTPSystem(muscadet.System):
             specs = {name: sdf.to_dict("records")
                      for name, sdf in specs_dfd.items()
                      if name in ["tasks"]}
-
+            
         self.specs = specs
 
-        self.build_system()
+        if self.specs:
+            self.build_system()
 
     def build_system(self):
 
@@ -50,6 +51,8 @@ class PTPSystem(muscadet.System):
         for task_specs in self.specs["tasks"]:
             task_cur = task_specs.get("task_id")
             if dep := task_specs.get("depends_on"):
+                if not dep:
+                    continue
                 tasks_dep_list = dep.split(",")
                 [self.auto_connect(task_dep, task_cur)
                  for task_dep in tasks_dep_list]

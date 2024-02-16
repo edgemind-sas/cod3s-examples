@@ -20,6 +20,16 @@ class MySystem(muscadet.System):
         self.add_component(cls="Block",
                            name="D1")
 
+        self.add_component(cls="Block",
+                           name="D2")
+
+        self.add_component(cls="Block",
+                           name="D6")
+
+        self.add_component(cls="Block",
+                           name="D7")
+
+
         self.auto_connect("S", "C.")
 
         self.add_logic_or("LO__C", {"C.": ".*"},
@@ -53,3 +63,10 @@ class MySystem(muscadet.System):
         self.comp["S"].add_exp_failure_mode(**param_s)
         self.comp["C1"].add_delay_failure_mode(**param_c1)
         self.comp["C2"].add_delay_failure_mode(**param_c2)
+
+
+        self.add_indicator_var(
+            component=".*",
+            var=".*fed_available_out$",
+            stats=["mean", "stddev"],
+        )

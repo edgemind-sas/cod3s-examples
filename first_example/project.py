@@ -8,9 +8,21 @@ project = cod3s.COD3SProject.from_yaml(
 )
 
 
-viz_specs = project.get_system_viz()
+simu_params = {
+    "nb_runs": 10,
+    "schedule": [
+        {
+            "start": 0.0,
+            "end": 100.0,
+            "nvalues": 5,
+        },
+    ],
+    "time_unit": "seconds",
+    "seed": 123331245,
+}
 
-print(viz_specs)
+project.system.simulate(cod3s.PycMCSimulationParam(**simu_params))
+
+project.system.simulate(cod3s.PycMCSimulationParam(**simu_params))
 
 sys.exit(0)
-+
